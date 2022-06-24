@@ -1,0 +1,39 @@
+
+
+
+<div class="container-fluid mt-5">
+	<div class="row">
+		<div class="col-lg-2 d-lg-block d-md-none"></div>
+		<div class="col-md-12 col-lg-8  rounded-3 default-box-shadow row justify-content-start mx-0">
+			{{#each products as |product|}} 
+				<div class="card-container p-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+					<div class="card w-100">
+						<img src="{{product.productImage}}" class="card-img-top" alt="...">
+						<div class="card-body max-height-170">
+							<h5 class="card-title">{{product.productName}}</h5>
+							<p class="card-text">
+								<ul>
+									<li>{{product.details.storageCapacity}}</li>
+									<li>{{product.details.numberSim}}</li>
+									<li>{{product.details.cameraResolution}}</li>
+									<li>{{product.details.displaySize}}</li>
+								</ul>
+							</p>
+						</div>
+						<div class="card-price">
+							<span class="price">{{product.price}} L.E</span>
+						</div>
+						<div class="card-tail">
+							<a href="#" class="btn btn-warning mx-1">see details</a>
+							<a href="#" class="btn btn-primary mx-1">add to card</a>
+						</div>
+					</div>
+				</div>
+			{{/each}}
+
+			
+
+		</div>
+		<div class="col-lg-2 d-lg-block d-md-none"></div>
+	</div>
+</div>
