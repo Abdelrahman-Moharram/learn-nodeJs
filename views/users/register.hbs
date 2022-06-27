@@ -1,0 +1,48 @@
+
+<div class="container my-5">
+	<div class="row w-50">
+		
+
+		<form  action="/users/register" method="post">
+
+			<div class="mb-3">
+				<input value="{{data.username}}" name="username" type="text" class="form-control" id="exampleInputusername1" placeholder="username">
+				{{#each errors.username as |er|}}
+					 <div class="text-danger">{{er}}</div>
+				{{/each}}
+			</div>
+		
+			<div class="mb-3">
+				<input value="{{data.fullname}}" name="fullname" type="text" class="form-control" id="exampleInputfullname1" placeholder="fullname">
+				{{#each errors.fullname as |er|}}
+					 <div class="text-danger">{{er}}</div>
+				{{/each}}
+			</div>
+			
+			<div class="mb-3">
+				<input value="{{data.email}}" name="email" type="email" class="form-control" id="exampleInputemail1" placeholder="email">
+				{{#each errors.email as |er|}}
+					 <div class="text-danger">{{er}}</div>
+				{{/each}}
+			</div>
+			
+			<div class="mb-3">
+				<input name="password" type="password" class="form-control" id="exampleInputpassword1" placeholder="password">
+				{{#each errors.password as |er|}}
+					 <div class="text-danger">{{er}}</div>
+				{{/each}}
+			</div>
+
+			<div class="mb-3">
+				<input name="password2" type="password" class="form-control" id="exampleInputpassword2" placeholder="retype password">
+			</div>
+
+			<div class="float-right">
+				<button type="submit" class="btn btn-primary">register</button>
+			</div>
+		</form>
+				{{#each errors as |er|}}
+					 <div class="text-danger">{{er}}</div>
+				{{/each}}
+	</div>
+</div>
