@@ -4,7 +4,9 @@ const check = require('express-validator').check;
 const users = require('../Controller/usersController');
 const validationResult = require('express-validator').validationResult
 const passport = require('passport');
+const csrf = require('csurf');
 
+router.use(csrf());
 
 router.get('/register',is_loggedin_redirect_home,users.getRegister);	
 router.get('/user',is_loggedin, users.profile)

@@ -3,7 +3,7 @@
 	<div class="row w-50">
 
 		<form  action="/users/signin" method="post">
-
+			<input type="text" name="_csrf" value="{{csrfToken}}" hidden>
 			<div class="mb-3">
 				<input value="{{email}}" name="email" type="email" class="form-control" id="exampleInputemail1" placeholder="email">
 				{{#each signErrors.email as |er|}}

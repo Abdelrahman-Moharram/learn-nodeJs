@@ -4,6 +4,7 @@
 		
 
 		<form  action="/users/register" method="post">
+			<input type="text" name="_csrf" value="{{csrfToken}}" hidden>
 
 			<div class="mb-3">
 				<input value="{{data.username}}" name="username" type="text" class="form-control" id="exampleInputusername1" placeholder="username">
@@ -41,8 +42,6 @@
 				<button type="submit" class="btn btn-primary">register</button>
 			</div>
 		</form>
-				{{#each errors as |er|}}
-					 <div class="text-danger">{{er}}</div>
-				{{/each}}
+
 	</div>
 </div>

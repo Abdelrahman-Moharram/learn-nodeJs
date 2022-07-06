@@ -7,7 +7,7 @@ const passport = require('passport');
 const getSignin = (req, res, next)=>{
 	var signErrors = req.flash('signinError');
 	var inputEmail = req.flash('email');
-  res.render('users/login', {title:'signin', signErrors: signErrors[0], email: inputEmail[0], checkuser:false});
+  res.render('users/login', {title:'signin', signErrors: signErrors[0], email: inputEmail[0], checkuser:false, csrfToken:req.csrfToken()});
 }
 
 
@@ -17,7 +17,7 @@ const getSignin = (req, res, next)=>{
 const getRegister = (req, res, next)=> {
 	var errorMessages = req.flash("signupError");
 	var inputData = req.flash('inputData');
-  res.render('users/register', {title:'register', errors:errorMessages[0], data:inputData[0], checkuser:false});
+  res.render('users/register', {title:'register', errors:errorMessages[0], data:inputData[0], checkuser:false, csrfToken:req.csrfToken()});
 }
 
 
