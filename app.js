@@ -4,18 +4,33 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
+const session = require('express-session');
+const flash = require('connect-flash');
+const passport = require('passport');
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var usersRouter = require('./routes/usersRoutes');
 var app = express();
-
+require('./config/passport'); // 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', '.hbs');
+app.use(flash());
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use(session({
+  secret : 'ShoppingCard_@!',
+  saveUninitialized:true, // هنا بيحجز مكان للداتا اللي لسه متعملتش في الموقع
+  resave:false, // في حاله اني مثلا خرجت او قفلت الموقع بيعمل السيشن من اول وجديد لو ترو
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 mongoose.connect('mongodb://localhost/shopping-card', {useNewUrlParser:true}, (errors)=>{

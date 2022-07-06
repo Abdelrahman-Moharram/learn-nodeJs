@@ -25,3 +25,7 @@
   text-align: end;
   margin: 10px 20px;
 }
+
+.float-right{
+  float: right;
+}

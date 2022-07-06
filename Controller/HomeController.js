@@ -16,8 +16,10 @@ const index = (req, res, next) => {
 			console.log(errors)
 		}
 		else{			
-			console.log(result)
-			res.render('Home/index', { title: 'Shoping Card', products:result });
+			console.log(req.session)
+			var user = req.flash("user");
+			console.log(user)
+			res.render('Home/index', { title: 'Shoping Card', products:result, checkuser:req.isAuthenticated()});
 		}
 	})
 }
@@ -33,6 +35,7 @@ const search = (req, res, next)=>{
 			console.log(errors)
 		}
 		else{
+			console.log(result)
 			res.render('Home/index', { title: req.query.search + ' | search', products:result });
 		}
 	})
