@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{{title}}}</title>
+</head>
+<body>
+    {{{body}}}
+    <ul id="render-data">
+
+    </ul>
+    <input id="message" type="text">
+    <button onclick="sendToServer()">send</button>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        let socket = io();
+        socket.on('connect', ()=>{console.log("Connected")})
+
+        socket.on('serverEvent', (data)=>{
+            console.log(data)
+            const ele = document.getElementById('render-data');
+            if (data.data){
+                for (var i=0; i<data.data.length; i++){
+                    ele.appendChild(appendLi(data.data[i]))
+                }
+            }
+        })
+        function appendLi(text, style=false){
+            var child = document.createElement('li');
+            child.innerHTML = text;
+            if (!style){
+                child.style = "background-color:#333; color:white;margin-top:10px; padding:7px 10px; border-radius:20px; width:fit-content";
+            }else{
+                child.style = "margin-left:30px; background-color:#3578E5; color:white;margin-top:10px; padding:7px 10px; border-radius:20px; width:fit-content";
+
+            }
+            return child
+        }
+        socket.on('serverMessage',data=>{
+            const ele = document.getElementById('render-data');
+            if (data.data){
+                for (var i=0; i<data.data.length; i++){
+                    ele.appendChild(appendLi(data.data[i]))
+                }
+            }
+        })
+        function sendToServer(){
+            const message = document.getElementById('message');
+            socket.emit('ClientMessage', {
+                status: 'success',
+                data : [message.value], 
+            });
+            const ele = document.getElementById('render-data');
+            ele.appendChild(appendLi(message.value, true));
+            message.value= "";
+
+        }
+    </script>
+</body>
+</html>
