@@ -1,0 +1,23 @@
+.message{
+    padding: 7px 20px;
+    border-radius: 20px;
+    margin-top: 10px;
+    width: fit-content;
+    max-width: 80%;
+    transition: all ease .4s ;
+}
+.sender{
+    color: white; 
+    background-color: dodgerblue;
+}
+.receiver{
+    color: white; 
+    background-color: #1a1a1a;
+}
+.p-absolute{
+    position: absolute !important;
+}
+.message-bottom{
+    position: absolute !important;
+    margin-top: 90%;
+}

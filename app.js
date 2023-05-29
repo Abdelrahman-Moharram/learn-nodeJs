@@ -8,33 +8,31 @@ const path = require('path');
 const aboutRouter = require('./Routes/aboutRouter');
 
 // socket configurations
-
-io.on('connection', (socket)=>{
-	socket.emit('serverEvent', {
-		status:"connected",
+io.on('connection',(socket)=>{
+	console.log('connected')
+	socket.emit('ServerEvent',{
+		status:"Connected",
 		// data:[
-		// 	"Adel",
-		// 	"adel@yahoo.com"
+		// 	"Walid",
+		// 	22
 		// ]
 	})
-	socket.on('ClientMessage', data=>{
-		console.log(data)
-		socket.broadcast.emit('serverMessage', data)
+	socket.on('clientMessage', (data)=>{
+		socket.broadcast.emit('ServerEvent',data)
 	})
-})
-
+});
 
 // CONFS
 
 app.set("view engine", "hbs")
 app.set("views", path.join(__dirname, "views"))
-
+app.use(express.static(path.join(__dirname,'static')));
 
 // ADD ROUTES
 app.use("/about",aboutRouter);
 
 app.all("/",(req, res, next)=>{
-	res.send("Hello There in Home");
+	res.render("Home/index", {title:"Home"})
 })
 
 app.use((req, res, next)=>{
