@@ -1,0 +1,64 @@
+<div class="container w-50 mt-5">
+	<form method="post" action="/accounts/register">
+
+		<div class="mb-3">
+			<label for="exampleInputEmail1" class="form-label">FullName</label>
+			<input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+			<div id="emailHelp" class="form-text">
+				<ul>
+					{{#each errors.fullname as |error|}}
+							<li class="text-danger">{{error}}</li>
+					{{/each}}
+				</ul>
+			</div>
+		</div>
+
+		<div class="mb-3">
+			<label for="exampleInputEmail1" class="form-label">UserName</label>
+			<input type="text" name="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+			<div id="emailHelp" class="form-text">
+				<ul>
+					{{#each errors.username as |error|}}
+							<li class="text-danger">{{error}}</li>
+					{{/each}}
+				</ul>
+			</div>
+		</div>
+
+		<div class="mb-3">
+			<label for="exampleInputEmail1" class="form-label">Email address</label>
+			<input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+			<div id="emailHelp" class="form-text">
+				<ul>
+					{{#each errors.email as |error|}}
+							<li class="text-danger">{{error}}</li>
+					{{/each}}
+				</ul>
+			</div>
+		</div>
+		<div class="mb-3">
+			<label for="exampleInputPassword1" class="form-label">Password</label>
+			<input type="password" name="password" class="form-control" id="exampleInputPassword1">
+			<div id="emailHelp" class="form-text">
+				<ul>
+					{{#each errors.password as |error|}}
+							<li class="text-danger">{{error}}</li>
+					{{/each}}
+				</ul>
+			</div>
+		</div>
+		<div class="mb-3">
+			<label for="exampleInputPassword1" class="form-label">Retype Password</label>
+			<input type="password" name="retype_password" class="form-control" id="exampleInputPassword1">
+			<div id="emailHelp" class="form-text">
+				<ul>
+					{{#each errors.retype_password as |error|}}
+							<li class="text-danger">{{error}}</li>
+					{{/each}}
+				</ul>
+			</div>
+		</div>
+
+		<button type="submit" class="btn btn-primary">Submit</button>
+	</form>
+</div>
