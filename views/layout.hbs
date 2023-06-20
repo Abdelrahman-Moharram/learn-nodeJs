@@ -6,92 +6,96 @@
     <title>{{{title}}}</title>
     <link rel="stylesheet" href="/css/styles.css">
     <link href="/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">  </head>
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css">
+  </head>
   <body>
+        <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+      <!-- Container wrapper -->
+      <div class="container">
+        <!-- Navbar brand -->
+        <h1 class="mx-2"><a class="navbar-brand py-2" href="/">Chat App</a></h1>
+        <!-- Search form -->
+        <form class="input-group" style="width: 400px">
+          <input type="search" class="form-control" placeholder="Type query" aria-label="Search" />
+          <button class="btn btn-outline-primary" type="button" data-mdb-ripple-color="dark" style="padding: .45rem 1.5rem .35rem;">
+            Search
+          </button>
+        </form>
+
+        <!-- Toggle button -->
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+          data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+          aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Collapsible wrapper -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <!-- Left links -->
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active d-flex flex-column text-center" aria-current="page" href="/"><i class="fas fa-home fa-lg"></i><span class="small">Home</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link d-flex flex-column text-center" aria-current="page" href="#"><i class="fas fa-user-friends fa-lg"></i><span class="small">My Network</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link d-flex flex-column text-center" aria-current="page" href="#"><i class="fas fa-briefcase fa-lg"></i><span class="small">Jobs</span></a>
+            </li>
+            <li class="nav-item dropdown">
+              <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                <ul class="navbar-nav">
+                  <li class="nav-item dropdown">
+                    <a class=" nav-link d-flex flex-column text-center cursor-pointer" data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="fas fa-bell fa-lg"></i> <span class="small">notfications</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark" style="width: 20rem;margin-left:-50px">
+                      <li><a class="dropdown-item white-space-unset py-3" href="#">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus explicabo beatae mollitia recusandae cupiditate minus sit totam quisquam numquam similique, vero, reprehenderit pariatur tempora sequi magnam aliquid enim quia odit!</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            
+            <li class="nav-item dropdown">
+              {{#if user}}
+              <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                <ul class="navbar-nav">
+                  <li class="nav-item dropdown">
+                    <button class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown" aria-expanded="false">
+                      <img
+                        src="https://mdbootstrap.com/img/Photos/Avatars/img%20(9).jpg"
+                        class="rounded-circle"
+                        height="30"
+                        alt=""
+                        loading="lazy"
+                      />
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                      <li><a class="dropdown-item" href="/{{user.username}}">Profile</a></li>
+                      <li><a class="dropdown-item" href="#">Another action</a></li>
+                      <li><a class="dropdown-item" href="/accounts/logout">Logout</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              {{else}}
+              <li class="nav-item"><a href="/accounts/login" class="nav-link d-flex flex-column text-center"><i class="fas fa-sign-in-alt fa-lg"></i><span class="small">Login</span></a></li>
+              <span class="nav-link d-flex flex-column text-center">or</span>
+              <li class="nav-item"><a href="/accounts/register" class="nav-link d-flex flex-column text-center"><i class="fas fa-user-plus fa-lg"></i><span class="small">Register</span></a></li>
+
+              {{/if}}
+            </li>
+          </ul>
+          <!-- Left links -->
+        </div>
+        <!-- Collapsible wrapper -->
+      </div>
+      <!-- Container wrapper -->
+    </nav>
     <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-  <!-- Container wrapper -->
-  <div class="container">
-    <!-- Navbar brand -->
-    <a class="navbar-brand" href="#"><i class="fab fa-linkedin fa-2x"></i></a>
-    <!-- Search form -->
-    <form class="input-group" style="width: 400px">
-      <input type="search" class="form-control" placeholder="Type query" aria-label="Search" />
-      <button class="btn btn-outline-primary" type="button" data-mdb-ripple-color="dark" style="padding: .45rem 1.5rem .35rem;">
-        Search
-      </button>
-    </form>
-
-    <!-- Toggle button -->
-    <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
-      data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-      aria-label="Toggle navigation">
-      <i class="fas fa-bars"></i>
-    </button>
-
-    <!-- Collapsible wrapper -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <!-- Left links -->
-      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active d-flex flex-column text-center" aria-current="page" href="#"><i class="fas fa-home fa-lg"></i><span class="small">Home</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link d-flex flex-column text-center" aria-current="page" href="#"><i class="fas fa-user-friends fa-lg"></i><span class="small">My Network</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link d-flex flex-column text-center" aria-current="page" href="#"><i class="fas fa-briefcase fa-lg"></i><span class="small">Jobs</span></a>
-        </li>
-        <li class="nav-item">
-          <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-            <ul class="navbar-nav">
-              <li class="nav-item dropdown">
-                <button class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown" aria-expanded="false">
-                  Notifications
-                </button>
-                <ul class="">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link d-flex flex-column text-center" aria-current="page" href="#"><i class="fas fa-bell fa-lg"></i><span class="small">{{user.username}}</span></a>
-        </li>
-        <li class="nav-item dropdown">
-          <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-            <ul class="navbar-nav">
-              <li class="nav-item dropdown">
-                <button class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown" aria-expanded="false">
-                  <img
-                    src="https://mdbootstrap.com/img/Photos/Avatars/img%20(9).jpg"
-                    class="rounded-circle"
-                    height="30"
-                    alt=""
-                    loading="lazy"
-                  />
-                </button>
-                <ul class="dropdown-menu dropdown-menu-dark">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </li>
-      </ul>
-      <!-- Left links -->
-    </div>
-    <!-- Collapsible wrapper -->
-  </div>
-  <!-- Container wrapper -->
-</nav>
-<!-- Navbar -->
-<div style="margin-top:70px"></div>
+    <div style="margin-top:70px"></div>
     {{{body}}}
     <script src="/js/bootstrap.bundle.min.js"></script>
   </body>
