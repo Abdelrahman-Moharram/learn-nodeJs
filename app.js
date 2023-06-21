@@ -6,10 +6,24 @@ const session = require('express-session');
 const sessionStore = require('connect-mongodb-session')(session);
 const flash = require('express-flash')
 
+const server = require('http').createServer(app) // socket.io require http server type
+const io = require('socket.io')(server)
+const socketInit = require("./sockets/init.sockets")
+
+
+// socket.io CONFIG
+io.on("connection", (socket)=>{
+    console.log("connected");
+    socketInit(socket)
+    
+})
+
+
+
 // import Routes
 const ErrorRoutes = require('./Routers/errors.routes')
 const HomeRoutes = require('./Routers/home.routes')
-const AccountsRoutes = require('./Routers/accounts.routes')
+const AccountsRoutes = require('./Routers/accounts.routes');
 
 
 app.use(bodyParser.urlencoded({ extended:true}))
@@ -51,6 +65,6 @@ app.use('/accounts', AccountsRoutes)
 app.use(ErrorRoutes)
 
 
-app.listen("3000", "192.168.1.105", ()=>{
+server.listen("3000", "192.168.1.105", ()=>{
     console.log("listening on 192.168.1.105:3000")
 })

@@ -18,8 +18,11 @@
     "express-flash-message": "^3.0.2",
     "express-session": "^1.17.3",
     "hbs": "^4.2.0",
+    "latest-version": "^7.0.0",
     "mongodb": "^5.6.0",
     "mongoose": "^7.3.0",
-    "multer": "^1.4.5-lts.1"
+    "multer": "^1.4.5-lts.1",
+    "socket.io": "^4.6.2",
+    "v20": "^0.1.0"
   }
 }
