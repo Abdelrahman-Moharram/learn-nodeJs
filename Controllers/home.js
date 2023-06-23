@@ -75,10 +75,22 @@ const profile = (req, res, next)=>{
                     sendMessage:true,
                     FriendRequest:friendShip.friendRequest
                 }
-                res.render("home/profile", {title:req.params.username,friendShip:true , frOps:fr, u:user, errors:req.flash("friendRequest")})
+                res.render("home/profile", {
+                    title:req.params.username,
+                    friendShip:true , 
+                    frOps:fr, 
+                    u:user, 
+                    errors:req.flash("friendRequest")
+                })
             }else{
                 FriendRequestOps(userSession, req.params.username).then((fr)=>{
-                    res.render("home/profile", {FriendRequest:fr.FriendRequest,title:req.params.username, frOps:fr, u:user, errors:req.flash("friendRequest")})
+                    res.render("home/profile", {
+                        FriendRequest:fr.FriendRequest,
+                        title:req.params.username, 
+                        frOps:fr, 
+                        u:user, 
+                        errors:req.flash("friendRequest")
+                    })
                 }).catch(err=>{console.log("76=>",err);})
             }
         }).catch(err=>{console.log("72=>",err);})
