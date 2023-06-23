@@ -1,30 +1,36 @@
 const socket = io()
 
 socket.on("connect",()=>{
-    let id = document.getElementById("socket_id");
-    if(id) {
-        id = id.value
-        console.log("connected to front + ",id);
-    }
-    socket.emit("notificationRoom", id)
     
-
-    socket.on(user._id, (notifications)=>{
+    // console.log("front + ",id);
+    
+    let id = document.getElementById("socket_id").value;
+    if(id) {
+        console.log(id)
+    }
+    socket.on(id, (notifications)=>{
+        console.log("==>", notifications);
         if (notifications.length)
-            for (var i = 0; i<notifications.length; i++)
+        {
+            for (var i = 0; i<notifications.length; i++){
                 pushNotification(notifications[i])
+                notifications.splice(i, 1)
+            }
+    
+        }
+                
         
     })
-
     
-    function AddFriendNotifications(user){
-        socket.emit("Notification", {user:user})
-    }
     
-
 })
+function AddFriendNotifications(u){
+    console.log("u>>",u);
+    socket.emit("Notifications", u)
+}
 
 const pushNotification = (notification)=>{
+    console.log("pushNotification function");
     var notificationsDropdown =  document.getElementById("notifications-dropdown");
     const li = document.createElement("li")
     const a = document.createElement("a")

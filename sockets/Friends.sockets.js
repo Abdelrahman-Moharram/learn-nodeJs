@@ -12,10 +12,15 @@ const FriendsRequest = (io)=>{
                 console.log(err);
             })
         })
-        socket.on("Notification", (user)=>{
-            socket.emit(user._id, {
-                message: user.username +" Send  you a friend request"
-            })
+        socket.on("Notifications", (data)=>{
+            console.log("0-->",data);
+            io.emit(data[0], 
+                [
+                    {
+                        message: data[1] +" Send  you a friend request"
+                    }
+                ]
+            )
         })
     })
 }

@@ -1,5 +1,6 @@
-module.exports = (socket)=>{
-    socket.on("notificationRoom", (id)=>{
-        socket.join(id);
-    })
-}
+// module.exports = (socket)=>{
+//     socket.on("joinNotificationRoom", (id)=>{
+//         console.log(id);
+//         socket.join(id);
+//     })
+// }
