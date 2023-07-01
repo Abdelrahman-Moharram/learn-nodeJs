@@ -50,21 +50,34 @@ const FirendShip = (data)=>{
 }
 
 
+// return new Promise((resolve, reject) => {
+//     mongoose.connect(DB_URL).then(()=>{
+//         return FriendRequest.find({sender:sender,receiver: receiver}).then(friendRequest=>{
+//             if(!friendRequest){
+//                 console.log(sender, receiver, friendRequest);
+//                 mongoose.disconnect()
+//                 reject('404')
+//             }else{
+//                 mongoose.disconnect()
+//                 resolve(friendRequest)
+//             }
+//         }).catch(err=>{
+//             mongoose.disconnect()
+//             reject(err)
+//         })
+//     })
+// })
 const getReceiverFriendsRequests = (sender, receiver) =>{
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) =>{
         mongoose.connect(DB_URL).then(()=>{
-            return FriendRequest.findOne({sender:sender,receiver: receiver}).then(friendRequest=>{
-                if(!friendRequest){
-                    mongoose.disconnect()
-                    reject('404')
-                }else{
-                    mongoose.disconnect()
-                    resolve(friendRequest)
-                }
-            }).catch(err=>{
-                mongoose.disconnect()
-                reject(err)
-            })
+            return FriendRequest.findOne({sender:sender,receiver: receiver})
+        }).then(fr=>{
+            console.log(sender, receiver, fr);
+             mongoose.disconnect()
+            resolve(fr)
+        }).catch(err=>{
+            mongoose.disconnect()
+            reject(err)
         })
     })
 }

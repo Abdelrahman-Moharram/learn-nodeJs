@@ -123,3 +123,12 @@
 .white-space-unset{
     white-space: unset !important;
 }
+.notifications-count{
+    background-color: #f00;
+    color: white;
+    padding: 1px 6px;
+    position: absolute;
+    font-size: 10px;
+    top:0px;
+    right:15px
+}

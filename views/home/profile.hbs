@@ -42,8 +42,8 @@
             {{/if}}
             <div class="d-flex justify-content-center">
             {{#if frOps.sendAdd}}  
-                {{!-- href="/{{u.username}}/add-friend?next=/{{u.username}}"  --}}
-                <a onclick='AddFriendNotifications(["{{u._id}}", "{{u.username}}"])' class="btn btn-primary btn-rounded btn-lg mx-1">
+                {{!--   --}}
+                <a href="/{{u.username}}/add-friend?next=/{{u.username}}" onclick='AddFriendNotifications({id:"{{u._id}}", username:"{{u.username}}", type:"AddFriend", sender:"{{user.username}}"})' class="btn btn-primary btn-rounded btn-lg mx-1">
                       <i class="bi bi-person-fill-add"></i> add friend
                 </a>
             {{/if }}
