@@ -114,6 +114,7 @@ const removeRequest = (req, res, next)=>{
     RemoveFriendRequest(req.params.id).then((removed)=>{
         if (req.query.next)
             return res.redirect(req.query.next)
+        res.redirect("/friends-requests")
     }).catch(err=>{
         console.log("on remove request : home controller  err=",err);
     })

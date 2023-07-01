@@ -27,7 +27,6 @@ socket.on("connect",()=>{
     
 })
 function AddFriendNotifications(u){
-    console.log("u: ",u);
     socket.emit("Notifications", u)
 }
 
@@ -45,9 +44,9 @@ const pushNotification = (notification)=>{
 }
 
 const makeNotificationData = (notification)=>{
-    const text = notification['username'] + ' send you A Friend Request <a class="btn btn-primary my-1 d-block mx-auto" href="/accept-request/'+notification['fr']+'">accept</a>'
+    const text = '<span class="fw-bolder">'+notification['sender'] + '</span> send you A Friend Request <div class="d-flex justify-content-evenly"><a href="/accept-request/'+notification['fr']+'" class="btn btn-primary btn-rounded btn-lg mx-1">accept</a>  <a href="remove-request/'+notification['fr']+'" class="btn btn-dark text-white btn-rounded btn-lg mx-1">remove</a></div>'
     if (notification['type'] === "AddFriend"){
-        return [text , "/"+notification['username']]
+        return [text , "/"+notification['sender']]
     }
     return null
 }

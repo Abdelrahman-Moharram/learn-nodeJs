@@ -5,6 +5,7 @@ const FriendsRequest = (io)=>{
         
         socket.on("Notifications", (data)=>{
             setTimeout(()=>{
+                //  واحيانا سيرفر الداتا بيز بيقع "null" عشان اللينك اللي بيبعت اد جواه الفنكشن ديه وهي بتجيب الاد ف مش  بتلافي الاد وبترجع "setTimeout" احنا هنا استخدمنا 
                 getReceiverFriendsRequests(data['sender'], data['username']).then(fr=>{
                     data['fr'] = fr._id
                     io.emit(data['id'], data)
