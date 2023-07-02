@@ -168,6 +168,45 @@ const MakeFriendShip = (id)=>{
     })
 }
 
+// return User.find(
+//     {"username":{ "$regex": query, "$options": "i" }},
+//     {"name":{ "$regex": query, "$options": "i" }},
+//     {"email":{ "$regex": query, "$options": "i" }}
+//     )
+
+
+const SearchUser = (query) =>{
+    return new Promise((resolve, reject)=>{
+        mongoose.connect(DB_URL).then(()=>{
+            if (query){
+                return User.find({
+                    "$or":[
+                        {
+                            "name":{"$regex":query, "$options": "i"},
+                        },
+                        {
+                            "username":{"$regex":query, "$options": "i"},
+                        },
+                        {
+                            "email":{"$regex":query, "$options": "i"},
+                        },
+                    ]
+                })
+            }
+            return null
+        }).then(users=>{
+            mongoose.disconnect()
+            resolve(users)
+        }).catch(err=>{
+            mongoose.disconnect()
+            reject(err)
+        })
+    })
+}
+
+
+
+
 module.exports = {
     getFriendRequest,
     user_data,
@@ -175,5 +214,6 @@ module.exports = {
     FriendRequestOps,
     RemoveFriendRequest,
     MakeFriendShip,
-    getFriendShip
+    getFriendShip,
+    SearchUser
 }

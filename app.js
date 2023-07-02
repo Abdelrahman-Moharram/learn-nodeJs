@@ -13,12 +13,12 @@ const socketFriends = require("./sockets/Friends.sockets")
 
 socketFriends.FriendsRequest(io)
 
-// socket.io CONFIG
-io.on("connection", (socket)=>{
-    console.log("connected");
-    // socketInit(socket)
+// // socket.io CONFIG
+// io.on("connection", (socket)=>{
+//     console.log("connected");
+//     // socketInit(socket)
     
-})
+// })
 
 
 
@@ -67,6 +67,6 @@ app.use('/accounts', AccountsRoutes)
 app.use(ErrorRoutes)
 
 
-server.listen("3003", "192.168.1.102", ()=>{
-    console.log("listening on 192.168.1.102:3003")
+server.listen("3000", "192.168.1.102", ()=>{
+    console.log("listening on 192.168.1.102:3000")
 })

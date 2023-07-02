@@ -5,7 +5,8 @@ const {
     , RemoveFriendRequest
     , getFriendRequest
     , MakeFriendShip
-    , getFriendShip} = require("../db_methods/home")
+    , getFriendShip
+    , SearchUser} = require("../db_methods/home")
 const {
     sendFriendRequest,
     FirendShip,
@@ -107,7 +108,11 @@ const profile = (req, res, next)=>{
 }
 
 
-
+const search = (req, res)=>{
+    SearchUser(req.query.search).then(users=>{
+        res.render("home/search",{title:"search | "+req.query.search,query:req.query.search,users:users})
+    }).catch(err=>{console.log("err",err);});
+}
 
 
 const removeRequest = (req, res, next)=>{
@@ -135,5 +140,6 @@ module.exports = {
     removeRequest,
     profile,
     chat,
-    acceptRequest
+    acceptRequest,
+    search
 }

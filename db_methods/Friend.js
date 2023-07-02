@@ -72,7 +72,6 @@ const getReceiverFriendsRequests = (sender, receiver) =>{
         mongoose.connect(DB_URL).then(()=>{
             return FriendRequest.findOne({sender:sender,receiver: receiver})
         }).then(fr=>{
-            console.log(sender, receiver, fr);
              mongoose.disconnect()
             resolve(fr)
         }).catch(err=>{
