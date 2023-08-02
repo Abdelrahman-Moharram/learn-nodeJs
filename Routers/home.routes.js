@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const {is_authenticated} = require('./guard/auth.guard')
-const {index, chat, profile, FriendRequest, getfriendsRequests,removeRequest, acceptRequest, search} = require("../Controllers/home")
+const {index, chat, profile, FriendRequest, getfriendsRequests,removeRequest, acceptRequest, search, post_markRead} = require("../Controllers/home")
+
+router.post("/mark-notification-read",is_authenticated, post_markRead)
 
 router.get('/', index)
 router.get("/friends-requests" ,is_authenticated,getfriendsRequests)

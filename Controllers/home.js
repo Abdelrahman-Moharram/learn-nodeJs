@@ -13,6 +13,9 @@ const {
     getReceiverFriendsRequests,
     senderFriendsRequests,
 } = require("../db_methods/Friend");
+const {readUserNotifications} = require("../db_methods/notifications");
+
+
 
 const index = (req, res, next)=>{
     res.render('home/index', {title:"Home"})
@@ -133,6 +136,13 @@ const acceptRequest=(req, res, next)=>{
     })
 }
 
+const post_markRead = (req, res, next)=>{
+    readUserNotifications(req.body.id).then((notifications)=>{
+    }).catch(err=>{
+        console.error("read notifications errors= ",err);
+    })
+}
+
 module.exports = {
     index,
     FriendRequest,
@@ -141,5 +151,6 @@ module.exports = {
     profile,
     chat,
     acceptRequest,
-    search
+    search,
+    post_markRead
 }
