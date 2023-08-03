@@ -87,7 +87,7 @@ const senderFriendsRequests = (username) =>{
         mongoose.connect(DB_URL).then(()=>{
             return FriendRequest.find({sender:username})
         }).then(reqs=>{
-            console.log("==>",reqs);
+            // console.log("==>",reqs);
             if(reqs){
                 mongoose.disconnect()
                 resolve(reqs)

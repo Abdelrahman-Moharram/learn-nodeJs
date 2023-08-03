@@ -8,7 +8,6 @@ const flash = require('express-flash')
 
 const server = require('http').createServer(app) // socket.io require http server type
 const io = require('socket.io')(server)
-const socketInit = require("./sockets/init.sockets")
 const socketFriends = require("./sockets/Friends.sockets")
 
 socketFriends.FriendsRequest(io)

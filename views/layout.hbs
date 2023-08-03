@@ -40,22 +40,19 @@
             <li class="nav-item">
               <a class="nav-link d-flex flex-column text-center" aria-current="page" href="/friends-requests"><i class="fas fa-user-friends fa-lg"></i><span class="small">My Network</span></a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link d-flex flex-column text-center" aria-current="page" href="#"><i class="fas fa-briefcase fa-lg"></i><span class="small">Jobs</span></a>
-            </li>
+
             <li class="nav-item dropdown">
               <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                 <ul class="navbar-nav">
                   <li class="nav-item dropdown">
                   {{!-- DisplayNone('notifications-count'); markRead('{{u._id}}') --}}
-                    <a onclick="makeReadDisplayNone('notifications-count', '{{user._id}}')" class=" nav-link d-flex flex-column text-center cursor-pointer" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a onclick="notifyReadDisplayNone('notifications-count', '{{user._id}}')" class=" nav-link d-flex flex-column text-center cursor-pointer" data-bs-toggle="dropdown" aria-expanded="false">
                       <span id="notifications-count" class="notifications-count rounded-circle d-none"></span>
                       <i class="fas fa-bell fa-lg"></i> 
                       <span class="small">notfications</span>
 
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-dark" id="notifications-dropdown" style="width: 20rem;margin-left:-50px">
-                      <li><a class="dropdown-item white-space-unset py-3" href="#">test notification</a></li>
+                    <ul class="dropdown-menu dropdown-menu-right dropdown-menu-dark" id="notifications-dropdown" style="width: 25rem;margin-left:-50px; max-height:700px; overflow-y:auto ">
                     </ul>
                   </li>
                 </ul>

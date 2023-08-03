@@ -7,47 +7,29 @@ socket.on("connect",()=>{
     
     let receiver_id = document.getElementById("socket_id").value;
     
-    socket.on(receiver_id, (notifications)=>{
-        for (n of notifications){
-            if (n.seen === false && n.receiver_id === receiver_id){
-                if (Notifications[receiver_id]){
-                    Notifications[receiver_id].push(n)
-                    length[n.receiver_id] = 1;
-                }else{
-                    Notifications[n.receiver_id] = [n]
-                    length[n.receiver_id] ++;
-                }
-            }
+    socket.on(receiver_id, (notification)=>{
+        if (Notifications[receiver_id]){
+            Notifications[receiver_id].push(notification)
+        }else{
+            Notifications[notification.receiver_id] = [notification]
         }
-        showNotificationLength(length[receiver_id])
+        showNotificationLength(Notifications[receiver_id].length)
         for (var i = 0; i<Notifications[receiver_id].length; i++){
             pushNotification(Notifications[receiver_id][i])
             Notifications[receiver_id].splice(i, 1)
         }
-        // for (let notification of notifications){
-
-        //     if (Notifications[receiver_id]){
-        //         Notifications[receiver_id].push(notification)
-        //     }else{
-        //         Notifications[notification.receiver_id] = [notification]
-        //     }
-        //     showNotificationLength(Notifications[receiver_id].length)
-        //     for (var i = 0; i<Notifications[receiver_id].length; i++){
-        //         pushNotification(Notifications[receiver_id][i])
-        //         Notifications[receiver_id].splice(i, 1)
-        //     }
-        // }
-                
-        
-    })
+    }
+        )
     
     
 })
+
 function AddFriendNotifications(u){
     socket.emit("Notifications", u)
 }
 
 const pushNotification = (notification)=>{
+    console.log("notification==>",notification);
     var notificationsDropdown =  document.getElementById("notifications-dropdown");
     const li = document.createElement("li")
     const a = document.createElement("a")
@@ -70,10 +52,10 @@ const makeNotificationData = (notification)=>{
 
 
 const showNotificationLength = (length) =>{
-    
     if (!length)
         return 
     const Notification = document.getElementById("notifications-count");
+    // console.log("length=",length, "inner= ", Notification.innerText);
     if (Notification.innerText)
         Notification.innerText = parseInt(Notification.innerText) + length
     else
@@ -93,10 +75,9 @@ const toggleAppearance = (id) =>{
 
 }
 
-const makeReadDisplayNone = (div_id, user_id) =>{
-    console.log("here");
+const notifyReadDisplayNone = (div_id, user_id) =>{
     DisplayNone(div_id)
-    markRead(user_id)
+    getNotifications(user_id)
 }
 
 const DisplayNone = (id) =>{
@@ -105,11 +86,14 @@ const DisplayNone = (id) =>{
     notifications.classList.add("d-none")
 }
 
-const markRead = (id)=>{
-    $.post('/mark-notification-read', 
+const getNotifications = (id)=>{
+    $.ajax({url: '/get-notifications'}, 
     {id: id},
-    function(data, status, xhr){
-        console.log("status=>", status, "\n data=>", data);
-    }
-    )
+    ).done(function (data) {
+        console.log(data.notifications);
+        for (var i = 0; i<data.notifications.length; i++){
+            pushNotification(data.notifications[i])
+            data.notifications.splice(i, 1)
+        }
+    });
 }

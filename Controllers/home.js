@@ -136,8 +136,11 @@ const acceptRequest=(req, res, next)=>{
     })
 }
 
-const post_markRead = (req, res, next)=>{
-    readUserNotifications(req.body.id).then((notifications)=>{
+const markRead = (req, res, next)=>{
+    readUserNotifications(req.session.user._id).then((notifications)=>{
+        return res.send({
+            notifications:notifications
+        })
     }).catch(err=>{
         console.error("read notifications errors= ",err);
     })
@@ -152,5 +155,5 @@ module.exports = {
     chat,
     acceptRequest,
     search,
-    post_markRead
+    markRead
 }
