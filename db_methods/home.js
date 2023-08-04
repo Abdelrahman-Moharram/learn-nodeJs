@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const DB_URL = 'mongodb://localhost:27017/ChatApp'
+process.env.DB_URL = 'mongodb://localhost:27017/ChatApp'
 
 
 const User = require("../models/users.model")
@@ -9,7 +9,7 @@ const {FriendRequest, Friend} = require("../models/friends.models");
 
 const user_data = (username, currUser=null) => {
     return new Promise((resolve, reject) => {
-        mongoose.connect(DB_URL).then(()=>{
+        mongoose.connect(process.env.DB_URL).then(()=>{
             return User.findOne({username: username}).then(user=>{
                 if(!user){
                     mongoose.disconnect()
@@ -34,7 +34,7 @@ const user_data = (username, currUser=null) => {
 
 const getFriendRequest = (sender, receiver) =>{
     return new Promise((resolve, reject) => {
-        mongoose.connect(DB_URL).then(()=>{
+        mongoose.connect(process.env.DB_URL).then(()=>{
             return FriendRequest.findOne({sender:sender, receiver:receiver})    
         }).then(fr=>{
             mongoose.disconnect()
@@ -50,7 +50,7 @@ const getFriendRequest = (sender, receiver) =>{
 
 const getFriendRequestById = (id) =>{
     return new Promise((resolve, reject) => {
-        mongoose.connect(DB_URL).then(()=>{
+        mongoose.connect(process.env.DB_URL).then(()=>{
             return FriendRequest.findOne({_id:id})    
         }).then(fr=>{
             mongoose.disconnect()
@@ -66,7 +66,7 @@ const getFriendRequestById = (id) =>{
 
 const getAllFriendsRequests = (currUser)=>{
     return new Promise((resolve, reject) => {
-        mongoose.connect(DB_URL).then(()=>{
+        mongoose.connect(process.env.DB_URL).then(()=>{
             return FriendRequest.find({receiver:currUser, status:"pending"})
         }).then(frs=>{
             mongoose.disconnect()
@@ -86,7 +86,7 @@ const is_sender = (sender, reciever)=>{
 
 const getFriendShip = (sender, receiver)=>{
     return new Promise((resolve, reject)=>{
-        mongoose.connect(DB_URL).then(()=>{
+        mongoose.connect(process.env.DB_URL).then(()=>{
             return Friend.findOne({sender:sender, receiver:receiver})
         }).then(fr=>{
             if(fr){
@@ -134,7 +134,7 @@ const FriendRequestOps = async function(currUser, UserProfile){
 
 const RemoveFriendRequest = (id)=>{
     return new Promise((resolve, reject) => {
-        mongoose.connect(DB_URL).then(()=>{
+        mongoose.connect(process.env.DB_URL).then(()=>{
             return FriendRequest.findByIdAndRemove(id);
         }).then(removed=>{
             mongoose.disconnect()
@@ -148,7 +148,7 @@ const RemoveFriendRequest = (id)=>{
 
 const MakeFriendShip = (id)=>{
     return new Promise((resolve, reject) => {
-        mongoose.connect(DB_URL).then(()=>{
+        mongoose.connect(process.env.DB_URL).then(()=>{
             return FriendRequest.findOneAndUpdate({_id:id}, {status:"accepted"})
             
         }).then(fr=>{
@@ -177,7 +177,7 @@ const MakeFriendShip = (id)=>{
 
 const SearchUser = (query) =>{
     return new Promise((resolve, reject)=>{
-        mongoose.connect(DB_URL).then(()=>{
+        mongoose.connect(process.env.DB_URL).then(()=>{
             if (query){
                 return User.find({
                     "$or":[

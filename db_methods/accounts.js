@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const DB_URL = 'mongodb://localhost:27017/ChatApp'
+process.env.DB_URL = 'mongodb://localhost:27017/ChatApp'
 
 
 const User = require("../models/users.model")
@@ -18,7 +18,7 @@ const hashPassword = (password)=>{
 
 const CreateUser = (data) =>{
     return new Promise((resolve, reject) =>{
-        mongoose.connect(DB_URL).then(()=>{
+        mongoose.connect(process.env.DB_URL).then(()=>{
             return User.findOne({email: data.email})
         }).then(user=>{
             if(user){
@@ -52,7 +52,7 @@ const CreateUser = (data) =>{
 
 const Authenticate = (email, password) =>{
     return new Promise((resolve, reject) =>{
-        mongoose.connect(DB_URL).then(()=>{
+        mongoose.connect(process.env.DB_URL).then(()=>{
             return User.findOne({email:email})
         }).then(user=>{
             if(user){

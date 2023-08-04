@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
-const DB_URL = 'mongodb://localhost:27017/ChatApp'
+process.env.DB_URL = 'mongodb://localhost:27017/ChatApp'
 
 
 const {FriendRequest, Friend} = require("../models/friends.models")
 
 const sendFriendRequest = (sender, receiver) =>{
     return new Promise((resolve, reject) =>{
-        mongoose.connect(DB_URL).then(() =>{
+        mongoose.connect(process.env.DB_URL).then(() =>{
             if (sender !== receiver){
                 return FriendRequest.findOne({sender: sender, receiver: receiver})
             }else{
@@ -36,7 +36,7 @@ const sendFriendRequest = (sender, receiver) =>{
 
 const FirendShip = (data)=>{
     return new Promise((resolve, reject)=>{
-        mongoose.connect(DB_URL).then(() =>{
+        mongoose.connect(process.env.DB_URL).then(() =>{
             let friendShip = new Friend(data)
             return friendShip.save()
         }).then((friendShip)=>{
@@ -51,7 +51,7 @@ const FirendShip = (data)=>{
 
 
 // return new Promise((resolve, reject) => {
-//     mongoose.connect(DB_URL).then(()=>{
+//     mongoose.connect(process.env.DB_URL).then(()=>{
 //         return FriendRequest.find({sender:sender,receiver: receiver}).then(friendRequest=>{
 //             if(!friendRequest){
 //                 console.log(sender, receiver, friendRequest);
@@ -69,7 +69,7 @@ const FirendShip = (data)=>{
 // })
 const getReceiverFriendsRequests = (sender, receiver) =>{
     return new Promise((resolve, reject) =>{
-        mongoose.connect(DB_URL).then(()=>{
+        mongoose.connect(process.env.DB_URL).then(()=>{
             return FriendRequest.findOne({sender:sender,receiver: receiver})
         }).then(fr=>{
              mongoose.disconnect()
@@ -84,7 +84,7 @@ const getReceiverFriendsRequests = (sender, receiver) =>{
 
 const senderFriendsRequests = (username) =>{
     return new Promise((resolve, reject)=>{
-        mongoose.connect(DB_URL).then(()=>{
+        mongoose.connect(process.env.DB_URL).then(()=>{
             return FriendRequest.find({sender:username})
         }).then(reqs=>{
             // console.log("==>",reqs);

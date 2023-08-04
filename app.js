@@ -5,6 +5,7 @@ const path = require('path');
 const session = require('express-session');
 const sessionStore = require('connect-mongodb-session')(session);
 const flash = require('express-flash')
+require('dotenv').config();
 
 const server = require('http').createServer(app) // socket.io require http server type
 const io = require('socket.io')(server)
@@ -66,6 +67,6 @@ app.use('/accounts', AccountsRoutes)
 app.use(ErrorRoutes)
 
 
-server.listen("3000", "192.168.1.105", ()=>{
-    console.log("listening on 192.168.1.105:3000")
+server.listen(process.env.port_number, process.env.ip, ()=>{
+    console.log("listening on localhost:"+(process.env.port_number).toString())
 })
