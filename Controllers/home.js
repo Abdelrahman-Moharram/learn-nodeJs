@@ -13,7 +13,7 @@ const {
     getReceiverFriendsRequests,
     senderFriendsRequests,
 } = require("../db_methods/Friend");
-const {readUserNotifications} = require("../db_methods/notifications");
+const {readUserNotifications, getUnReadNotifications, getUserNotifications} = require("../db_methods/notifications");
 
 
 
@@ -137,9 +137,24 @@ const acceptRequest=(req, res, next)=>{
 }
 
 const markRead = (req, res, next)=>{
-    readUserNotifications(req.session.user._id).then((notifications)=>{
+    getUserNotifications(req.session.user._id).then(notifications=>{
+        readUserNotifications(req.session.user._id).then((readNotifications)=>{
+            return res.send({
+                notifications:notifications
+            })
+        }).catch(err=>{
+            console.error("read notifications errors= ",err);
+        })
+    }).catch(errs=>{
+        console.error("read notifications errors= ",errs);
+        
+    })
+}
+
+const getUnReadNotificationsLength = (req, res, next)=>{
+    getUnReadNotifications(req.session.user._id).then((notifications)=>{
         return res.send({
-            notifications:notifications
+            notifications:notifications.length
         })
     }).catch(err=>{
         console.error("read notifications errors= ",err);
@@ -155,5 +170,6 @@ module.exports = {
     chat,
     acceptRequest,
     search,
-    markRead
+    markRead,
+    getUnReadNotificationsLength
 }

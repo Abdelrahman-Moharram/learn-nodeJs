@@ -40,13 +40,14 @@
             <li class="nav-item">
               <a class="nav-link d-flex flex-column text-center" aria-current="page" href="/friends-requests"><i class="fas fa-user-friends fa-lg"></i><span class="small">My Network</span></a>
             </li>
-
+            
+            {{#if user}}
             <li class="nav-item dropdown">
               <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                 <ul class="navbar-nav">
                   <li class="nav-item dropdown">
                   {{!-- DisplayNone('notifications-count'); markRead('{{u._id}}') --}}
-                    <a onclick="notifyReadDisplayNone('notifications-count', '{{user._id}}')" class=" nav-link d-flex flex-column text-center cursor-pointer" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a onclick="notifyReadDisplayNone('notifications-count','notifications-dropdown' , '{{user._id}}')" class=" nav-link d-flex flex-column text-center cursor-pointer" data-bs-toggle="dropdown" aria-expanded="false">
                       <span id="notifications-count" class="notifications-count rounded-circle d-none"></span>
                       <i class="fas fa-bell fa-lg"></i> 
                       <span class="small">notfications</span>
@@ -60,7 +61,6 @@
             </li>
             
             <li class="nav-item dropdown">
-              {{#if user}}
               <input type="text" id="socket_id" value="{{user._id}}" hidden>
               <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                 <ul class="navbar-nav">
@@ -87,8 +87,8 @@
               <li class="nav-item"><a href="/accounts/login" class="nav-link d-flex flex-column text-center"><i class="fas fa-sign-in-alt fa-lg"></i><span class="small">Login</span></a></li>
               <span class="nav-link d-flex flex-column text-center">or</span>
               <li class="nav-item"><a href="/accounts/register" class="nav-link d-flex flex-column text-center"><i class="fas fa-user-plus fa-lg"></i><span class="small">Register</span></a></li>
-              {{/if}}
             </li>
+            {{/if}}
           </ul>
           <!-- Left links -->
         </div>

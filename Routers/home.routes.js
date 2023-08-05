@@ -1,8 +1,10 @@
 const router = require('express').Router();
 const {is_authenticated} = require('./guard/auth.guard')
-const {index, chat, profile, FriendRequest, getfriendsRequests,removeRequest, acceptRequest, search, markRead} = require("../Controllers/home")
+const {index, chat, profile, FriendRequest, getfriendsRequests,removeRequest, acceptRequest, search, markRead, getUnReadNotificationsLength} = require("../Controllers/home")
 
 router.get("/get-notifications",is_authenticated, markRead)
+router.get("/get-notifications-length",is_authenticated, getUnReadNotificationsLength)
+
 
 router.get('/', index)
 router.get("/friends-requests" ,is_authenticated,getfriendsRequests)

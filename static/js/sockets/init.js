@@ -72,11 +72,12 @@ const toggleAppearance = (id) =>{
         Notification.classList.replace("d-none", "d-block")
     else
         Notification.classList.replace("d-block", "d-none")
-
+        Notification.innerHTML = ""
 }
 
-const notifyReadDisplayNone = (div_id, user_id) =>{
+const notifyReadDisplayNone = (div_id, ul_id, user_id) =>{
     DisplayNone(div_id)
+    toggleAppearance(ul_id)
     getNotifications(user_id)
 }
 
@@ -90,10 +91,17 @@ const getNotifications = (id)=>{
     $.ajax({url: '/get-notifications'}, 
     {id: id},
     ).done(function (data) {
-        console.log(data.notifications);
         for (var i = 0; i<data.notifications.length; i++){
             pushNotification(data.notifications[i])
             data.notifications.splice(i, 1)
         }
     });
 }
+
+$(document).ready(function() {
+    $.ajax({url: '/get-notifications-length'}, 
+    ).done(function (data) {
+        console.log("data==>",data);
+        showNotificationLength(data.notifications)
+    });
+ });

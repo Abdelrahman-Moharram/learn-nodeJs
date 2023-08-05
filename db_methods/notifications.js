@@ -42,11 +42,8 @@ const getUserNotifications = (user_id) =>{
 const readUserNotifications = (user_id) =>{
     return new Promise((resolve, reject)=>{
         mongoose.connect(DB_URL).then(()=>{
-            return Notifications.find({receiver_id:user_id}).sort({seen:1})
+            return Notifications.updateMany({receiver_id:user_id}, {seen: true})  
         }).then((notifications)=>{
-            return Notifications.updateMany({receiver_id:user_id}, {seen:true}), notifications  
-        }).then((notifications, n)=>{
-            console.log(notifications);
             mongoose.disconnect()
             resolve(notifications)
         }).catch(err=>{
@@ -56,8 +53,26 @@ const readUserNotifications = (user_id) =>{
     })
 }
 
+
+const getUnReadNotifications = (user_id) =>{
+    return new Promise((resolve, reject)=>{
+        mongoose.connect(DB_URL).then(()=>{
+            return Notifications.find({receiver_id:user_id, seen:false})
+        }).then((notifications)=>{
+            mongoose.disconnect()
+            resolve(notifications)
+        }).catch(err=>{
+            mongoose.disconnect()
+            reject(err)
+        })
+    })
+}
+
+
+
 module.exports = {
     addNotification,
     getUserNotifications,
-    readUserNotifications
+    readUserNotifications,
+    getUnReadNotifications
 }
