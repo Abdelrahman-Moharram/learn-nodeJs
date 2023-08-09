@@ -1,11 +1,11 @@
 const {getReceiverFriendsRequests} = require("../db_methods/Friend")
 const{addNotification,
     getUserNotifications} = require("../db_methods/notifications")
+
 const FriendsRequest = (io)=>{
     io.on("connection", socket=>{
         
         socket.on("Notifications", (data)=>{
-            Notifications = {}
             setTimeout(()=>{
                 //  واحيانا سيرفر الداتا بيز بيقع "null" عشان اللينك اللي بيبعت اد جواه الفنكشن ديه وهي بتجيب الاد ف مش  بتلافي الاد وبترجع "setTimeout" احنا هنا استخدمنا 
                 getReceiverFriendsRequests(data['sender_username'], data['receiver_username']).then(fr=>{
@@ -13,8 +13,6 @@ const FriendsRequest = (io)=>{
                         data['data'] = fr._id
                     addNotification(data).then(()=>{
                         io.emit(data['receiver_id'], data)
-                    // getUserNotifications(data['receiver_id']).then(data=>{
-                    //     }).catch(err=>{console.log(err);})
                     }).catch(err=>{console.log(err);})
                     
                     // console.log("===>",data);
@@ -22,6 +20,11 @@ const FriendsRequest = (io)=>{
                     console.log("err", err);
                 })
             }, 200)
+        })
+
+        socket.on("Messages", (data)=>{
+            const Messages = {}
+            io.emit(data['receiver_id'])
         })
     })
 }
