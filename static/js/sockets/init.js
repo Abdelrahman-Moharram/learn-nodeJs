@@ -105,3 +105,9 @@ $(document).ready(function() {
         showNotificationLength(data.notifications)
     });
  });
+
+
+const sendMessage = () =>{
+    const input = document.getElementById('message-input')
+    
+}

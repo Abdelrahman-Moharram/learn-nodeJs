@@ -1,6 +1,6 @@
-<div class="container-fluid">
-    <div class="row ">
-        <div class="p-0 over-flow-y-hidden col-md-3 d-none  d-md-flex ">
+<div class="container-fluid" style="height: calc(100vh - 77px)">
+    <div class="row " style="height: inherit">
+        <div class="p-0 over-flow-y-hidden col-md-2 d-none  d-md-flex ">
             <div class="d-block p-1 w-100">
                 <div class="h2 text-center">
                     chats
@@ -41,7 +41,7 @@
                 </div>
             </div>
         </div>
-        <div class= " col-md-9 col-sm-12 p-0 border-left">
+        <div class= " col-md-10 col-sm-12 p-0 border-left">
             <div class="row m-0 p-0  text-bold align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom bg-white">
                 <div class="col-6">
                     <div class="w-fit-content float-left">
@@ -59,6 +59,13 @@
                         {{/if}}
                     </div>
                 </div>
+            </div>
+            <div>
+
+            </div>
+            <div class="message-form-container d-flex justify-content-center">
+                <input type="text" id="message-input" placeholder="message ..." class=" message-input">
+                <span onclick="sendMessage()" class="butn"><i class="lar la-paper-plane"></i></span>
             </div>
         </div>
     </div>
