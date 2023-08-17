@@ -1,6 +1,6 @@
 const Notifications = require("../models/notifications.models")
 const mongoose = require("mongoose")
-process.env.DB_URL = 'mongodb://localhost:27017/ChatApp'
+process.env.DB_URL = 'mongodb://127.0.0.1:27017/ChatApp'
 
 const addNotification = (data) => {
     return new Promise((resolve, reject) => {

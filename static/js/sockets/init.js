@@ -7,7 +7,8 @@ socket.on("connect",()=>{
     
     let receiver_id = document.getElementById("socket_id").value;
     
-    socket.on(receiver_id, (notification)=>{
+    // notifications
+    socket.on("n"+receiver_id, (notification)=>{
         if (Notifications[receiver_id]){
             Notifications[receiver_id].push(notification)
         }else{
@@ -18,14 +19,23 @@ socket.on("connect",()=>{
             pushNotification(Notifications[receiver_id][i])
             Notifications[receiver_id].splice(i, 1)
         }
-    }
-        )
+    })
+    
+    // messages
+    socket.on("m"+receiver_id, (messages)=>{
+        console.log(messages);
+    })
+
     
     
 })
 
 function AddFriendNotifications(u){
     socket.emit("Notifications", u)
+}
+
+function SendMessage(m){
+    socket.emit("Messages", m)
 }
 
 const pushNotification = (notification)=>{

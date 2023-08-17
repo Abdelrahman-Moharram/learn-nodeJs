@@ -2,10 +2,6 @@ const mongoose = require("mongoose")
 
 
 const messagesSchema = mongoose.Schema({
-    receiver_username:{
-        required:true,
-        type:String
-    },
     sender_username:{
         required:true,
         type:String
@@ -20,7 +16,7 @@ const messagesSchema = mongoose.Schema({
     },
     chat_id:{
         type:String,
-        required:true
+        required:false
     },
     datetime:{
         type:Date,
@@ -28,5 +24,35 @@ const messagesSchema = mongoose.Schema({
     }
 
 })
+
+
+
+
+const ChatSchema = mongoose.Schema({
+    name:{
+        type:String,
+        required:true
+    },
+    image:{
+        type:String,
+        required:true,
+    },
+    users:{
+        type:[], // users_ids
+        required:true
+    },
+    admins:{
+        type:[], // users_ids
+        required: true,
+    },
+    created_at:{
+        type:Date,
+        default: Date.now(),
+    }
+})
+
+
+
+
 
 module.exports = mongoose.model("Message", messagesSchema)

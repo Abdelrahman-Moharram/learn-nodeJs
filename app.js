@@ -39,7 +39,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 
 const STORE = new sessionStore({
-    uri:'mongodb://localhost:27017',
+    uri:'mongodb://127.0.0.1:27017',
     collection:"ChatApp",
 })
 
@@ -68,5 +68,5 @@ app.use(ErrorRoutes)
 
 
 server.listen(process.env.port_number, process.env.ip, ()=>{
-    console.log("listening on localhost:"+(process.env.port_number).toString())
+    console.log("listening on 127.0.0.1:"+(process.env.port_number).toString())
 })

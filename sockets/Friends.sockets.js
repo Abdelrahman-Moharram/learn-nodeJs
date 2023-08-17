@@ -12,7 +12,7 @@ const FriendsRequest = (io)=>{
                     if (fr) 
                         data['data'] = fr._id
                     addNotification(data).then(()=>{
-                        io.emit(data['receiver_id'], data)
+                        io.emit("n"+data['receiver_id'], data)
                     }).catch(err=>{console.log(err);})
                     
                     // console.log("===>",data);
