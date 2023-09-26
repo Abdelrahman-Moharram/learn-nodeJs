@@ -23,6 +23,7 @@ const FriendsRequest = (io)=>{
         })
 
         socket.on("Messages", (data)=>{
+            console.log(data);
             const Messages = {}
             io.emit(data['receiver_id'])
         })

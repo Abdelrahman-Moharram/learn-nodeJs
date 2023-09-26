@@ -18,7 +18,7 @@ const {readUserNotifications, getUnReadNotifications, getUserNotifications} = re
 
 
 const index = (req, res, next)=>{
-    res.render('home/index', {title:"Home"})
+    res.render('home/chat', {title:"Home"})
 }
 
 
@@ -26,7 +26,7 @@ const index = (req, res, next)=>{
 
 const chat = (req, res, next)=>{
     // console.log(req.session.user)
-    res.render('home/index', {title:req.params.username,})
+    res.render('home/chat', {title:req.params.username,})
 }
 
 

@@ -33,9 +33,10 @@ socket.on("connect",()=>{
 function AddFriendNotifications(u){
     socket.emit("Notifications", u)
 }
-
-function SendMessage(m){
-    socket.emit("Messages", m)
+function sendMessage(){
+    const input = document.getElementById('message-input')
+    socket.emit("Messages", input.value)
+    input.value = ""
 }
 
 const pushNotification = (notification)=>{
@@ -111,13 +112,7 @@ const getNotifications = (id)=>{
 $(document).ready(function() {
     $.ajax({url: '/get-notifications-length'}, 
     ).done(function (data) {
-        console.log("data==>",data);
         showNotificationLength(data.notifications)
     });
  });
 
-
-const sendMessage = () =>{
-    const input = document.getElementById('message-input')
-    
-}
