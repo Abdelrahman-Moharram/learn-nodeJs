@@ -5,44 +5,29 @@
                 <div class="h2 text-center">
                     chats
                 </div>
-                    <div class="mx-auto rounded h-fit-content w-100 over-flow-y-auto border-black p-3 hover-grey cursor-pointer">
-                    <div class="float-left">
-                        <img src="https://github.com/mdo.png" alt="" width="44" height="44" class="rounded-circle me-3 d-block">
-                        <div class="active-circle-small"></div>
-                    </div>
-                    <div class="">
-                        <div class="h5 mb-0 p-0">
-                            user-name
+                {{#each chats as |chat|}}
+                    <a href="/chat/{{chat._id}}" class="td-none d-block mx-auto rounded h-fit-content w-100 over-flow-y-auto border-black p-3 hover-grey cursor-pointer">
+                        <div class="float-left">
+                            <img src="https://github.com/mdo.png" alt="" width="44" height="44" class="rounded-circle me-3 d-block">
+                            <div class="active-circle-small"></div>
                         </div>
-                        <span class="text-muted font-size-small">
-                            lastest-message sent in this chat
-                        </span>
-                        <span class="text-end text-muted font-size-small">
-                            . jun-2
-                        </span>
-                    </div>
-                </div>
-                <div class="mx-auto rounded h-fit-content w-100 over-flow-y-auto border-black p-3 hover-grey cursor-pointer">
-                    <div class="float-left">
-                        <img src="https://github.com/mdo.png" alt="" width="44" height="44" class="rounded-circle me-3 d-block">
-                        <div class="active-circle-small"></div>
-                    </div>
-                    <div class="">
-                        <div class="h5 mb-0 p-0">
-                            user-name
+                        <div class="">
+                            <div class="h5 mb-0 p-0">
+                                {{chat.name}}
+                            </div>
+                            
+                            <span class="text-end text-muted font-size-small">
+                                . jun-2
+                            </span>
                         </div>
-                        <span class="text-muted font-size-small">
-                            lastest-message sent in this chat
-                        </span>
-                        <span class="text-end text-muted font-size-small">
-                           . jun-2
-                        </span>
-                    </div>
-                </div>
+                    </a>
+                {{/each}}
             </div>
         </div>
         <div class= " col-md-10 col-sm-12 p-0 border-left">
-            {{!-- <div class="row m-0 p-0  text-bold align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom bg-white">
+            
+            {{#if chat}}
+                <div class="row m-0 p-0  text-bold align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom bg-white">
                 <div class="col-6">
                     <div class="w-fit-content float-left">
                         <img src="https://github.com/mdo.png" alt="" width="60" height="60" class="rounded-circle me-3 d-block">
@@ -50,7 +35,7 @@
                     </div>
 
                     <div class="float-left">
-                        <span class="fs-5 fw-semibold d-block">Receiver Name</span>
+                        <span class="fs-5 fw-semibold d-block">{{chat.name}}</span>
                         {{#if false}}
                             <span class="d-block text-muted font-size-small mb-2">Active now</span>
                         {{else}}
@@ -62,11 +47,15 @@
             </div>
             <div>
 
+
             </div>
             <div class="message-form-container d-flex justify-content-center">
                 <input type="text" id="message-input" placeholder="message ..." class=" message-input">
-                <span onclick="sendMessage()" class="butn"><i class="lar la-paper-plane"></i></span>
-            </div> --}}
+                <span onclick="sendMessage('{{chat._id}}', '{{user.username}}')" class="butn"><i class="lar la-paper-plane"></i></span>
+            </div>
+
+            {{/if}}
+
         </div>
     </div>
 </div>

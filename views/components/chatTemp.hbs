@@ -1,0 +1,29 @@
+
+{{#> chatTemp}}
+{{chats}}
+        <div class="row m-0 p-0  text-bold align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom bg-white">
+            <div class="col-6">
+                <div class="w-fit-content float-left">
+                    <img src="https://github.com/mdo.png" alt="" width="60" height="60" class="rounded-circle me-3 d-block">
+                    <div class="active-circle"></div>
+                </div>
+
+                <div class="float-left">
+                    <span class="fs-5 fw-semibold d-block">{{this.name}}</span>
+                    {{#if false}}
+                        <span class="d-block text-muted font-size-small mb-2">Active now</span>
+                    {{else}}
+                        <span class="d-block text-muted font-size-small mb-2 mx-1">active 2 hours ago</span>
+
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        <div>
+
+        </div>
+        <div class="message-form-container d-flex justify-content-center">
+            <input type="text" id="message-input" placeholder="message ..." class=" message-input">
+            <span onclick="sendMessage()" class="butn"><i class="lar la-paper-plane"></i></span>
+        </div>
+{{/chatTemp}}

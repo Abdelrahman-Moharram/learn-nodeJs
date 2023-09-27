@@ -6,6 +6,7 @@ socket.on("connect",()=>{
     // console.log("front + ",id);
     
     let receiver_id = document.getElementById("socket_id").value;
+    let receiver_username = document.getElementById("socket_username").value;
     
     // notifications
     socket.on("n"+receiver_id, (notification)=>{
@@ -22,8 +23,8 @@ socket.on("connect",()=>{
     })
     
     // messages
-    socket.on("m"+receiver_id, (messages)=>{
-        console.log(messages);
+    socket.on("m_"+receiver_id, (messages)=>{
+        console.log("messages==> ",messages);
     })
 
     
@@ -33,9 +34,14 @@ socket.on("connect",()=>{
 function AddFriendNotifications(u){
     socket.emit("Notifications", u)
 }
-function sendMessage(){
+function sendMessage(chat_id, sender_username){
+    console.log(chat_id, sender_username);
     const input = document.getElementById('message-input')
-    socket.emit("Messages", input.value)
+    socket.emit("Messages", {
+        message: input.value,
+        chat_id:chat_id,
+        sender_username:sender_username
+    })
     input.value = ""
 }
 

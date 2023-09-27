@@ -6,7 +6,7 @@ const session = require('express-session');
 const sessionStore = require('connect-mongodb-session')(session);
 const flash = require('express-flash')
 require('dotenv').config();
-
+const hbs = require('hbs');
 const server = require('http').createServer(app) // socket.io require http server type
 const io = require('socket.io')(server)
 const socketFriends = require("./sockets/Friends.sockets")
@@ -27,12 +27,12 @@ const ErrorRoutes = require('./Routers/errors.routes')
 const HomeRoutes = require('./Routers/home.routes')
 const AccountsRoutes = require('./Routers/accounts.routes');
 
-
+hbs.registerPartials(__dirname + 'views/components');
+hbs.registerPartial('chatTemp', '{{prefix}}')
 app.use(bodyParser.urlencoded({ extended:true}))
 app.use(express.static('static'));
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
-
 
 
 

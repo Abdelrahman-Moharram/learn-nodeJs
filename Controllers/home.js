@@ -1,32 +1,97 @@
 const {
-      getAllFriendsRequests
-    , FriendRequestOps
-    , user_data
-    , RemoveFriendRequest
-    , getFriendRequest
-    , MakeFriendShip
-    , getFriendShip
-    , SearchUser} = require("../db_methods/home")
+      getAllFriendsRequests, 
+      FriendRequestOps, 
+      user_data, 
+      RemoveFriendRequest, 
+      getFriendRequest,
+      MakeFriendShip,
+      getFriendShip,
+      SearchUser,
+      getAllChats,
+      createChat,
+      getChatById
+} = require("../db_methods/home")
+
+
 const {
     sendFriendRequest,
     FirendShip,
     getReceiverFriendsRequests,
     senderFriendsRequests,
 } = require("../db_methods/Friend");
-const {readUserNotifications, getUnReadNotifications, getUserNotifications} = require("../db_methods/notifications");
 
+const {readUserNotifications, 
+    getUnReadNotifications, 
+    getUserNotifications
+} = require("../db_methods/notifications");
+
+
+
+
+
+
+
+
+
+// ------------------------------ Controllers ------------------------------ // 
+
+// getAllChats
+// createChat
+
+const fixChatName = (chats, username)=>{
+    for (const chat of chats){
+        var chatname=""
+        if (chat.users.length < 1){
+            return chats
+        }
+        chat.users.forEach((element, index) => {
+            if (element !== username){
+                if (index >= chat.users.length-1){
+                    chatname += element 
+                }else{
+                    chatname += element +" "
+                }
+            }
+        });
+        chat.name = chatname
+    }
+    return chats
+}
 
 
 const index = (req, res, next)=>{
-    res.render('home/chat', {title:"Home"})
+
+    getAllChats(req.session.user.username).then(chats=>{
+        chats = fixChatName(chats,  req.session.user.username)
+        res.render('home/chat', {title:"Home", chats:chats})
+    }).catch(err=>{
+        console.log(err);
+    })
 }
 
 
 
 
 const chat = (req, res, next)=>{
-    // console.log(req.session.user)
-    res.render('home/chat', {title:req.params.username,})
+    getAllChats(req.session.user.username).then(chats=>{
+        chats = fixChatName(chats,  req.session.user.username)
+        if (req.params.chat_id){
+            console.log(req.params);
+            if (req.params.chat_id !== "favicon.ico"){
+                getChatById(req.params.chat_id).then(chat=>{
+                    chat = fixChatName([chat], req.session.user.username)[0]
+                    res.render('home/chat', {title:"Home", chats:chats, chat:chat})
+                }).catch(err=>{
+                console.log("chat error",err,);   
+                })
+            }else{
+                res.redirect("/")
+            }
+        }else{
+            res.render('home/chat', {title:"Home", chats:chats})
+        }
+    }).catch(err=>{
+    })
 }
 
 
@@ -63,7 +128,7 @@ const getfriendsRequests = (req, res, next)=>{
 
 
 const profile = (req, res, next)=>{
-    
+    console.log(req.params);
     var userSession = req.session.user
     if (userSession){
         userSession = userSession.username
@@ -129,7 +194,8 @@ const removeRequest = (req, res, next)=>{
 }
 
 const acceptRequest=(req, res, next)=>{
-    MakeFriendShip(req.params.id).then((friendship)=>{
+    MakeFriendShip(req.params.id).then((friendship, chat)=>{
+        console.log("on accept request :", friendship, "\n\n\n",chat);
         if (req.query.next)
             return res.redirect(req.query.next)
         res.redirect("/friends-requests")
@@ -160,6 +226,17 @@ const getUnReadNotificationsLength = (req, res, next)=>{
         console.error("read notifications errors= ",err);
     })
 }
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports = {
     index,

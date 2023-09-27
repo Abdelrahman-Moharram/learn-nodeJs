@@ -31,11 +31,10 @@ const messagesSchema = mongoose.Schema({
 const ChatSchema = mongoose.Schema({
     name:{
         type:String,
-        required:true
+
     },
     image:{
         type:String,
-        required:true,
     },
     users:{
         type:[], // users_ids
@@ -43,7 +42,6 @@ const ChatSchema = mongoose.Schema({
     },
     admins:{
         type:[], // users_ids
-        required: true,
     },
     created_at:{
         type:Date,
@@ -55,4 +53,7 @@ const ChatSchema = mongoose.Schema({
 
 
 
-module.exports = mongoose.model("Message", messagesSchema)
+module.exports = {
+    Message: mongoose.model("Message", messagesSchema),
+    Chat:  mongoose.model("chat", ChatSchema),
+}

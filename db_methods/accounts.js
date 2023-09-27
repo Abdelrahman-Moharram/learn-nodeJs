@@ -44,6 +44,7 @@ const CreateUser = (data) =>{
             mongoose.disconnect()
             resolve(user)
         }).catch(err=>{
+            mongoose.disconnect()
             reject(err)
         })
     })
@@ -76,7 +77,27 @@ const Authenticate = (email, password) =>{
 }
 
 
+
+const getUserByUsername = (usernames) =>{
+    return new Promise((resolve, reject)=>{
+        mongoose.connect(process.env.DB_URL).then(()=>{
+            return User.find({username: {$in:  usernames}})
+            // return User.where({username:username}).findOne()
+
+        }).then(user=>{
+            resolve(user)
+            mongoose.disconnect()
+        }).catch(err=>{
+            reject(err)
+            mongoose.disconnect()
+        })
+    })
+}
+
+
+
 module.exports = {
     CreateUser,
     Authenticate,
+    getUserByUsername
 }

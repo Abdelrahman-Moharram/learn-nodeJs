@@ -4,8 +4,10 @@ process.env.DB_URL = 'mongodb://127.0.0.1:27017/ChatApp'
 
 const User = require("../models/users.model")
 const {FriendRequest, Friend} = require("../models/friends.models");
-
-
+const {
+    Chat,
+    Message,
+} =  require("../models/messages.models");
 
 const user_data = (username, currUser=null) => {
     return new Promise((resolve, reject) => {
@@ -30,6 +32,7 @@ const user_data = (username, currUser=null) => {
         })
     })
 }
+
 
 
 const getFriendRequest = (sender, receiver) =>{
@@ -90,14 +93,14 @@ const getFriendShip = (sender, receiver)=>{
             return Friend.findOne({sender:sender, receiver:receiver})
         }).then(fr=>{
             if(fr){
-                resolve(fr)
                 mongoose.disconnect()
+                resolve(fr)
             }else{
                 return Friend.findOne({sender:receiver, receiver:sender})
             }
         }).then(fr=>{
-            resolve(fr)
             mongoose.disconnect()
+            resolve(fr)
         }).catch(err=>{
             mongoose.disconnect()
             reject(err)
@@ -160,7 +163,18 @@ const MakeFriendShip = (id)=>{
             return newFriend.save()
         }).then(FriendShip=>{
             mongoose.disconnect()
-            resolve(FriendShip)
+            createChat({
+                users:[FriendShip.sender, FriendShip.receiver],
+            }).then((chat=>{
+                try{
+
+                    mongoose.disconnect()
+                }catch{
+
+                }
+                resolve(FriendShip, chat)
+
+            }))
         }).catch(err=>{
             mongoose.disconnect()
             reject(err)
@@ -203,10 +217,82 @@ const SearchUser = (query) =>{
         })
     })
 }
+// Message
+// Chat
 
 
 
+const getAllChats = (id)=>{
+    return new Promise((resolve, reject)=>{
+        mongoose.connect(process.env.DB_URL).then(()=>{
+            return Chat.find({users: {$all: [id]}})
+        }).then(chats=>{
+            mongoose.disconnect()
+            resolve(chats)
+        }).catch(err=>{
+            console.log("err=> ",err);
+            mongoose.disconnect()
+            reject(err)
+        })
+    })
+}
 
+const getChatById = (chat_id)=>{
+    return new Promise((resolve, reject)=>{
+        mongoose.connect(process.env.DB_URL).then(()=>{
+            console.log(chat_id);
+            return Chat.findOne({_id: chat_id})
+        }).then(chat=>{
+            mongoose.disconnect()
+            resolve(chat)
+        }).catch(err=>{
+            mongoose.disconnect()
+            reject(err)
+        })
+    })
+}
+
+
+
+const createChat = (data) =>{
+    return new Promise((resolve, reject)=>{
+        mongoose.connect(process.env.DB_URL).then(()=>{
+            const newChat = new Chat({
+                users: data.users,
+                name: data.name,
+                image: data.image,
+                admins: data.admins,
+            })
+            return newChat.save()
+        }).then((chat)=>{
+            mongoose.disconnect()
+            resolve(chat)
+        }).catch(err=>{
+            mongoose.disconnect()
+            reject(err)
+        })
+    })
+}
+
+const addMessage = (data) =>{
+    return new Promise((resolve, reject)=>{
+        mongoose.connect(process.env.DB_URL).then(()=>{
+            const newMessage = new Message({
+                sender_username: data.sender_username,
+                message: data.message,
+                files: data.files,
+                chat_id: data.chat_id
+            })
+            return newMessage.save()
+        }).then(message=>{
+            mongoose.disconnect()
+            resolve(message)
+        }).catch(err=>{
+            mongoose.disconnect()
+            reject(err)
+        })
+    })
+}
 module.exports = {
     getFriendRequest,
     user_data,
@@ -215,5 +301,9 @@ module.exports = {
     RemoveFriendRequest,
     MakeFriendShip,
     getFriendShip,
-    SearchUser
+    SearchUser,
+    getAllChats,
+    createChat,
+    getChatById,
+    addMessage
 }

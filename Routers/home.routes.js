@@ -6,11 +6,12 @@ router.get("/get-notifications",is_authenticated, markRead)
 router.get("/get-notifications-length",is_authenticated, getUnReadNotificationsLength)
 
 
-router.get('/', index)
+router.get('/', is_authenticated,index)
+router.get('/chat/:chat_id', is_authenticated, chat)
+
 router.get("/friends-requests" ,is_authenticated,getfriendsRequests)
 router.get("/:username",profile)
 router.get("/:username/add-friend" ,is_authenticated,FriendRequest) // not implemented yet .
-router.get('/chat/:username', is_authenticated, chat)
 router.get('/remove-request/:id', is_authenticated, removeRequest)
 router.get('/accept-request/:id', is_authenticated, acceptRequest)
 router.get('/search/', search)
