@@ -5,7 +5,6 @@ var length = {}
 console.log(document.getElementById("socket_id").value);
 socket.on("connect",()=>{
     
-    // console.log("front + ",id);
     
     let receiver_id = document.getElementById("socket_id").value;
     
@@ -25,7 +24,6 @@ socket.on("connect",()=>{
     
     // messages
     socket.on("m_"+receiver_id, (message)=>{
-        console.log("messages==> ",message);
         makeMessage(message)
     })
 
@@ -86,7 +84,6 @@ function makeMessage(message){
 }
 
 const pushNotification = (notification)=>{
-    console.log("notification==>",notification);
     var notificationsDropdown =  document.getElementById("notifications-dropdown");
     const li = document.createElement("li")
     const a = document.createElement("a")
@@ -100,7 +97,6 @@ const pushNotification = (notification)=>{
 }
 
 const makeNotificationData = (notification)=>{
-    console.log("--> ",notification);
     if (notification){
         const text = '<span class="fw-bolder">'+notification['sender_username'] + '</span> send you A Friend Request <div class="d-flex justify-content-evenly"><a href="/accept-request/'+notification['data']+'" class="btn btn-primary btn-rounded btn-lg mx-1">accept</a>  <a href="remove-request/'+notification['fr']+'" class="btn btn-dark text-white btn-rounded btn-lg mx-1">remove</a></div>'
         if (notification['type'] === "AddFriend"){
@@ -115,7 +111,6 @@ const showNotificationLength = (length) =>{
     if (!length)
         return 
     const Notification = document.getElementById("notifications-count");
-    // console.log("length=",length, "inner= ", Notification.innerText);
     if (Notification.innerText)
         Notification.innerText = parseInt(Notification.innerText) + length
     else

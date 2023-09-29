@@ -239,7 +239,6 @@ const getAllChats = (id)=>{
 const getChatById = (chat_id)=>{
     return new Promise((resolve, reject)=>{
         mongoose.connect(process.env.DB_URL).then(()=>{
-            console.log(chat_id);
             return Chat.findOne({_id: chat_id})
         }).then(chat=>{
             mongoose.disconnect()
@@ -256,7 +255,6 @@ const getChatById = (chat_id)=>{
 const createChat = (data) =>{
     return new Promise((resolve, reject)=>{
         mongoose.connect(process.env.DB_URL).then(()=>{
-            console.log("data--> ",data);
             const newChat = new Chat({
                 users: data.users,
                 name: data.name,
@@ -298,7 +296,6 @@ const getChatByUsersIds= (users) =>{
     mongoose.connect(process.env.DB_URL).then(()=>{
         return Chat.find({users:users})
     }).then(chat=>{
-        console.log(chat);
         mongoose.disconnect()   
         resolve(chat)
     }).catch(err=>{

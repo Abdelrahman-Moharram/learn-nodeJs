@@ -142,7 +142,6 @@ const getfriendsRequests = (req, res, next)=>{
 
 
 const profile = (req, res, next)=>{
-    console.log(req.params);
     var userSession = req.session.user
     if (userSession){
         userSession = userSession.username
@@ -150,7 +149,6 @@ const profile = (req, res, next)=>{
     user_data(req.params.username, userSession).then((user)=>{
         getFriendShip(userSession, req.params.username).then(friendShip=>{
             if (friendShip){
-                console.log(friendShip);
                 const fr={
                     is_sender: false,
                     is_receiver: false,

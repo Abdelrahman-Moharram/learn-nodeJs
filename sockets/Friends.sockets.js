@@ -33,7 +33,6 @@ const FriendsRequest = (io)=>{
                         io.emit("n"+data['receiver_id'], data)
                     }).catch(err=>{console.log(err);})
                     
-                    // console.log("===>",data);
                 }).catch(err=>{
                     console.log("err", err);
                 })
@@ -41,18 +40,14 @@ const FriendsRequest = (io)=>{
         })
 
         socket.on("Messages", (data)=>{
-            // console.log(data);
             addMessage({
                 message: data.message,
                 sender_username: data.sender_username,
                 chat_id: data.chat_id,
             }).then(message=>{
                 getChatById(data.chat_id).then(chat=>{
-                    console.log("users--> "+chat.users);
-                    // console.log(chat.users[i]);
                     getUserByUsername(chat.users).then(returned_users=>{
                         for (var i=0; i < returned_users.length; i++){
-                            console.log("returned_users= ","m_"+returned_users[i]._id);
                             if(returned_users[i] &&  returned_users[i].username !== data.sender_username){
                                 io.emit ("m_"+returned_users[i]._id, {
                                     message: message.message,

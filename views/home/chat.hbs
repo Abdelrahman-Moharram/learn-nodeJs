@@ -58,13 +58,12 @@
     </div>
 </div> --}}
 <section style="background-color: #eee;">
-  <div class="container-fluid py-5">
+  <div class="container-fluid">
 
     <div class="row">
 
-      <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
+      <div class="col-md-4 col-lg-3 d-md-block d-none col-xl-3 mb-4 mb-md-0">
 
-        <h5 class="font-weight-bold mb-3 text-center text-lg-start">Member</h5>
 
         <div class="card">
           <div class="card-body">
@@ -96,9 +95,19 @@
 
       </div>
         {{#if chat }}
-      <div class="col-md-6 col-lg-7 col-xl-8">
-
-        <ul class="list-unstyled" id="messages-list">
+      <div class="col-md-8 col-lg-9 col-xl-9" style="max-height: calc(100vh - 75px);">
+        
+        <div class="card my-1">
+          <div class="d-flex flex-row py-2 px-3">
+              <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
+              class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
+              <div class="">
+              <p class="fw-bold mb-0">{{chat.name}}</p>
+              <p class="small text-muted">Active Now</p>
+              </div>
+          </div>
+        </div>
+        <ul class="list-unstyled of-auto" style="max-height: calc(100% - 275px);" id="messages-list">
 
           {{#each messages as |message|}}
             {{#if is_sender}}
