@@ -13,10 +13,15 @@ const friendSchema = mongoose.Schema({
         type: String,
         required:true
     },
+    chat_id:{
+        type: String,
+        required: false
+    },
     friendRequest:{
         type: String,
         required: true,
-    }
+    },
+    
 })
 
 const friendRequestSchema = mongoose.Schema({

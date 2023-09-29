@@ -9,7 +9,8 @@ const {
       SearchUser,
       getAllChats,
       createChat,
-      getChatById
+      getChatById,
+      getMessageByChatId
 } = require("../db_methods/home")
 
 
@@ -60,7 +61,6 @@ const fixChatName = (chats, username)=>{
 
 
 const index = (req, res, next)=>{
-
     getAllChats(req.session.user.username).then(chats=>{
         chats = fixChatName(chats,  req.session.user.username)
         res.render('home/chat', {title:"Home", chats:chats})
@@ -70,17 +70,31 @@ const index = (req, res, next)=>{
 }
 
 
-
+function timeformat(date) {
+    var h = date.getHours();
+    var m = date.getMinutes();
+    var x = h >= 12 ? 'pm' : 'am';
+    h = h % 12;
+    h = h ? h : 12;
+    m = m < 10 ? '0'+m: m;
+    var mytime= h + ':' + m + ' ' + x;
+    return mytime;
+  }
 
 const chat = (req, res, next)=>{
     getAllChats(req.session.user.username).then(chats=>{
         chats = fixChatName(chats,  req.session.user.username)
         if (req.params.chat_id){
-            console.log(req.params);
             if (req.params.chat_id !== "favicon.ico"){
                 getChatById(req.params.chat_id).then(chat=>{
-                    chat = fixChatName([chat], req.session.user.username)[0]
-                    res.render('home/chat', {title:"Home", chats:chats, chat:chat})
+                    getMessageByChatId(req.params.chat_id).then(messages=>{
+                        chat = fixChatName([chat], req.session.user.username)[0]
+                        for (message of messages) {
+                            message.is_sender= message.sender_username===req.session.user.username
+                            message.datetime= timeformat(message.datetime)
+                        }
+                        res.render('home/chat', {title:"Home", chats:chats, chat:chat, messages:messages, is_sender: messages.sender_username===req.session.user.username})
+                    })
                 }).catch(err=>{
                 console.log("chat error",err,);   
                 })
@@ -136,12 +150,14 @@ const profile = (req, res, next)=>{
     user_data(req.params.username, userSession).then((user)=>{
         getFriendShip(userSession, req.params.username).then(friendShip=>{
             if (friendShip){
+                console.log(friendShip);
                 const fr={
                     is_sender: false,
                     is_receiver: false,
                     sameProfile: false,
                     sendAdd:false,
                     sendMessage:true,
+                    chat_id: friendShip.chat_id,
                     FriendRequest:friendShip.friendRequest
                 }
                 res.render("home/profile", {
@@ -149,6 +165,7 @@ const profile = (req, res, next)=>{
                     friendShip:true , 
                     frOps:fr, 
                     u:user, 
+                    
                     errors:req.flash("friendRequest")
                 })
             }else{
@@ -195,10 +212,11 @@ const removeRequest = (req, res, next)=>{
 
 const acceptRequest=(req, res, next)=>{
     MakeFriendShip(req.params.id).then((friendship, chat)=>{
-        console.log("on accept request :", friendship, "\n\n\n",chat);
         if (req.query.next)
             return res.redirect(req.query.next)
-        res.redirect("/friends-requests")
+        res.redirect("/")
+    }).catch(err=>{
+        console.log("204-err", err);
     })
 }
 

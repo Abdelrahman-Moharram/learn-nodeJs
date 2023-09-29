@@ -155,29 +155,28 @@ const MakeFriendShip = (id)=>{
             return FriendRequest.findOneAndUpdate({_id:id}, {status:"accepted"})
             
         }).then(fr=>{
-            const newFriend =  new Friend({
-                sender:fr.sender,
-                receiver:fr.receiver,
-                friendRequest:fr
+            const newChat = new Chat({
+                users:[fr.sender, fr.receiver]
             })
-            return newFriend.save()
+            newChat.save()
+            return {chat:newChat, fr:fr}
+        }).then((data)=>{
+            const newFriend =  new Friend({
+                sender: data.fr.sender,
+                receiver: data.fr.receiver,
+                friendRequest:data.fr,
+                chat_id: data.chat._id
+            })
+            return newFriend.save()                
+        }).catch(err=>{
+            console.log("create chat error= ", err);
         }).then(FriendShip=>{
+            resolve(FriendShip)
             mongoose.disconnect()
-            createChat({
-                users:[FriendShip.sender, FriendShip.receiver],
-            }).then((chat=>{
-                try{
-
-                    mongoose.disconnect()
-                }catch{
-
-                }
-                resolve(FriendShip, chat)
-
-            }))
+            
         }).catch(err=>{
             mongoose.disconnect()
-            reject(err)
+            reject("==< ",err)
         })
     })
 }
@@ -257,6 +256,7 @@ const getChatById = (chat_id)=>{
 const createChat = (data) =>{
     return new Promise((resolve, reject)=>{
         mongoose.connect(process.env.DB_URL).then(()=>{
+            console.log("data--> ",data);
             const newChat = new Chat({
                 users: data.users,
                 name: data.name,
@@ -269,7 +269,7 @@ const createChat = (data) =>{
             resolve(chat)
         }).catch(err=>{
             mongoose.disconnect()
-            reject(err)
+            reject("272 create chat error=> ",err)
         })
     })
 }
@@ -293,6 +293,37 @@ const addMessage = (data) =>{
         })
     })
 }
+
+const getChatByUsersIds= (users) =>{
+    mongoose.connect(process.env.DB_URL).then(()=>{
+        return Chat.find({users:users})
+    }).then(chat=>{
+        console.log(chat);
+        mongoose.disconnect()   
+        resolve(chat)
+    }).catch(err=>{
+        mongoose.disconnect()
+        reject(err)
+    })
+}
+
+const getMessageByChatId = async (chat_id) =>{
+    if(chat_id){
+        const connection = await mongoose.connect(process.env.DB_URL)
+        var messages = await Message.find({chat_id:chat_id}).sort({datetime:1})
+        if (messages){
+            await mongoose.disconnect()
+            return messages
+        }else{
+            await mongoose.disconnect()
+            throw {message:"An error occurred", code:500}
+        }
+    }else{
+        throw {message:"Chat Id Not Valid", code:500}
+    }
+}
+
+
 module.exports = {
     getFriendRequest,
     user_data,
@@ -305,5 +336,7 @@ module.exports = {
     getAllChats,
     createChat,
     getChatById,
-    addMessage
+    addMessage,
+    getChatByUsersIds,
+    getMessageByChatId
 }

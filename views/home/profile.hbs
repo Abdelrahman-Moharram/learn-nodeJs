@@ -43,7 +43,7 @@
             <div class="d-flex justify-content-center">
             {{#if frOps.sendAdd}}  
                 {{!--   --}}
-                <a href="/{{u.username}}/add-friend?next=/{{u.username}}" onclick='AddFriendNotifications({receiver_id:"{{u._id}}", receiver_username:"{{u.username}}", type:"AddFriend", sender_username:"{{user.username}}"})' class="btn btn-primary btn-rounded btn-lg mx-1">
+                <a href="/{{u.username}}/add-friend?next=/u/{{u.username}}" onclick='AddFriendNotifications({receiver_id:"{{u._id}}", receiver_username:"{{u.username}}", type:"AddFriend", sender_username:"{{user.username}}"})' class="btn btn-primary btn-rounded btn-lg mx-1">
                       <i class="bi bi-person-fill-add"></i> add friend
                 </a>
             {{/if }}
@@ -51,18 +51,18 @@
             
 
             {{#if frOps.is_sender}}
-              <a href="remove-request/{{FriendRequest._id}}?next=/{{u.username}}" class="btn btn-dark text-white btn-rounded btn-lg mx-1">
+              <a href="/remove-request/{{FriendRequest._id}}?next=/u/{{u.username}}" class="btn btn-dark text-white btn-rounded btn-lg mx-1">
                 <i class="bi bi-x-circle"></i> remove request
               </a>
             {{/if}}
 
             {{#if frOps.is_receiver}}
-              <a href="/accept-request/{{FriendRequest._id}}?next=/{{u.username}}" class="btn btn-primary btn-rounded btn-lg mx-1">
+              <a href="/accept-request/{{FriendRequest._id}}?next=/u/{{u.username}}" class="btn btn-primary btn-rounded btn-lg mx-1">
                 <i class="bi bi-check"></i> accept request
               </a>
             {{/if}}
             {{#if frOps.sendMessage}}
-                <a href="/chat/{{u.username}}" class="btn btn-primary btn-rounded btn-lg mx-1">
+                <a href="/chat/{{frOps.chat_id}}" class="btn btn-primary btn-rounded btn-lg mx-1">
                 <i class="bi bi-chat-fill"></i> Message now
               </a>
             {{/if }}

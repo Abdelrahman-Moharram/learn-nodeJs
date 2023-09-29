@@ -1,12 +1,13 @@
+
 const socket = io()
 var Notifications = {}
 var length = {}
+console.log(document.getElementById("socket_id").value);
 socket.on("connect",()=>{
     
     // console.log("front + ",id);
     
     let receiver_id = document.getElementById("socket_id").value;
-    let receiver_username = document.getElementById("socket_username").value;
     
     // notifications
     socket.on("n"+receiver_id, (notification)=>{
@@ -23,8 +24,9 @@ socket.on("connect",()=>{
     })
     
     // messages
-    socket.on("m_"+receiver_id, (messages)=>{
-        console.log("messages==> ",messages);
+    socket.on("m_"+receiver_id, (message)=>{
+        console.log("messages==> ",message);
+        makeMessage(message)
     })
 
     
@@ -35,14 +37,52 @@ function AddFriendNotifications(u){
     socket.emit("Notifications", u)
 }
 function sendMessage(chat_id, sender_username){
-    console.log(chat_id, sender_username);
     const input = document.getElementById('message-input')
+
+    document.getElementById('messages-list').innerHTML +=`
+    <li class="d-flex justify-content-between mb-4">
+    <div class="card w-100">
+        <div class="card-header d-flex justify-content-between p-3">
+        <p class="fw-bold mb-0">${sender_username}</p>
+        <p class="text-muted small mb-0"><i class="far fa-clock"></i> ${new Date()}</p>
+        </div>
+        <div class="card-body">
+        <p class="mb-0">
+            ${input.value}
+        </p>
+        </div>
+    </div>
+    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp" alt="avatar"
+        class="rounded-circle d-flex align-self-start ms-3 shadow-1-strong" width="60">
+    </li>
+          `
     socket.emit("Messages", {
         message: input.value,
         chat_id:chat_id,
         sender_username:sender_username
     })
     input.value = ""
+}
+
+function makeMessage(message){
+    var list = document.getElementById('messages-list');
+    list.innerHTML += `
+        <li class="d-flex justify-content-between mb-4">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar"
+                class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between p-3">
+                <p class="fw-bold mb-0">${message.username}</p>
+                <p class="text-muted small mb-0"><i class="far fa-clock"></i> ${message.datetime}</p>
+                </div>
+                <div class="card-body">
+                <p class="mb-0">
+                    ${message.message}
+                </p>
+                </div>
+            </div>
+        </li>
+    `
 }
 
 const pushNotification = (notification)=>{
@@ -60,9 +100,12 @@ const pushNotification = (notification)=>{
 }
 
 const makeNotificationData = (notification)=>{
-    const text = '<span class="fw-bolder">'+notification['sender_username'] + '</span> send you A Friend Request <div class="d-flex justify-content-evenly"><a href="/accept-request/'+notification['fr']+'" class="btn btn-primary btn-rounded btn-lg mx-1">accept</a>  <a href="remove-request/'+notification['fr']+'" class="btn btn-dark text-white btn-rounded btn-lg mx-1">remove</a></div>'
-    if (notification['type'] === "AddFriend"){
-        return [text , "/"+notification['sender_username']]
+    console.log("--> ",notification);
+    if (notification){
+        const text = '<span class="fw-bolder">'+notification['sender_username'] + '</span> send you A Friend Request <div class="d-flex justify-content-evenly"><a href="/accept-request/'+notification['data']+'" class="btn btn-primary btn-rounded btn-lg mx-1">accept</a>  <a href="remove-request/'+notification['fr']+'" class="btn btn-dark text-white btn-rounded btn-lg mx-1">remove</a></div>'
+        if (notification['type'] === "AddFriend"){
+            return [text , "/"+notification['sender_username']]
+        }
     }
     return null
 }

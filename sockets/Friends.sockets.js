@@ -58,7 +58,8 @@ const FriendsRequest = (io)=>{
                                     message: message.message,
                                     username: returned_users[i].username,
                                     active: returned_users[i].active,
-                                    image: returned_users[i].image
+                                    image: returned_users[i].image,
+                                    datetime: message.datetime
                                 })
                             }
                         }

@@ -10,7 +10,7 @@ router.get('/', is_authenticated,index)
 router.get('/chat/:chat_id', is_authenticated, chat)
 
 router.get("/friends-requests" ,is_authenticated,getfriendsRequests)
-router.get("/:username",profile)
+router.get("/u/:username",profile)
 router.get("/:username/add-friend" ,is_authenticated,FriendRequest) // not implemented yet .
 router.get('/remove-request/:id', is_authenticated, removeRequest)
 router.get('/accept-request/:id', is_authenticated, acceptRequest)
